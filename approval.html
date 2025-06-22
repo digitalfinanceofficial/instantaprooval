@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loan Approval - Digital Finance</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .popup {
+      background-color: #e6f2ff;
+      border: 2px solid #007bff;
+      color: #004085;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: gray;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Digital Finance</div>
+
+  <div class="container">
+    <div class="popup">
+      <h2>Congratulations!</h2>
+      <p><strong id="nameUser"></strong>, you are eligible for loan up to:</p>
+      <h3>₹<span id="eligibleAmount"></span></h3>
+    </div>
+
+    <form onsubmit="return goNext(event)">
+      <label for="requestedAmount">Enter Loan Amount You Want (Within Limit):</label>
+      <input type="number" id="requestedAmount" min="1000" required placeholder="e.g. 50000" />
+
+      <label for="months">Select Loan Tenure (1-36 months):</label>
+      <select id="months" required>
+        <option value="">-- Select Tenure --</option>
+      </select>
+
+      <div id="emiSummary" style="margin-top:15px; font-weight:bold;"></div>
+      <div id="feeSummary" style="margin-top:10px; font-size: 14px; color:#444;"></div>
+
+      <button type="submit">Next</button>
+    </form>
+  </div>
+
+  <div class="footer">
+    <hr/>
+    <p>Registered under RBI Guidelines. Digital Finance © 2025</p>
+  </div>
+
+  <script>
+    const name = localStorage.getItem("name");
+    const salary = parseInt(localStorage.getItem("salary")) || 0;
+    const nameUser = document.getElementById("nameUser");
+    const eligibleAmountEl = document.getElementById("eligibleAmount");
+    const requestedAmount = document.getElementById("requestedAmount");
+    const monthsSelect = document.getElementById("months");
+    const emiSummary = document.getElementById("emiSummary");
+    const feeSummary = document.getElementById("feeSummary");
+
+    nameUser.innerText = name;
+
+    let eligibleAmount = 0;
+    if (salary < 18000) {
+      eligibleAmount = 50000;
+    } else if (salary >= 18000 && salary <= 25000) {
+      eligibleAmount = 100000;
+    } else if (salary > 25000 && salary <= 30000) {
+      eligibleAmount = 250000;
+    } else {
+      eligibleAmount = 500000;
+    }
+
+    eligibleAmountEl.innerText = eligibleAmount;
+    requestedAmount.max = eligibleAmount;
+
+    requestedAmount.addEventListener("input", generateEMIOptions);
+
+    function generateEMIOptions() {
+      const amount = parseInt(requestedAmount.value);
+      if (!amount || amount < 1000 || amount > eligibleAmount) {
+        monthsSelect.innerHTML = `<option value="">-- Select Tenure --</option>`;
+        emiSummary.innerHTML = "";
+        feeSummary.innerHTML = "";
+        return;
+      }
+
+      monthsSelect.innerHTML = `<option value="">-- Select Tenure --</option>`;
+      for (let m = 1; m <= 36; m++) {
+        let rate = getInterestByTenure(m);
+        let monthlyRate = rate / 12 / 100;
+        let emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, m)) / (Math.pow(1 + monthlyRate, m) - 1);
+        let total = emi * m;
+        let option = document.createElement("option");
+        option.value = m;
+        option.text = `${m} Month${m>1?'s':''} - EMI ₹${emi.toFixed(0)} (at ${rate}% p.a.)`;
+        monthsSelect.appendChild(option);
+      }
+    }
+
+    monthsSelect.addEventListener("change", () => {
+      const amount = parseInt(requestedAmount.value);
+      const months = parseInt(monthsSelect.value);
+      if (amount && months) {
+        const rate = getInterestByTenure(months);
+        const monthlyRate = rate / 12 / 100;
+        const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+        const total = emi * months;
+        const fee = amount * 0.02;
+        const disbursed = amount - fee;
+
+        emiSummary.innerHTML = `Monthly EMI: ₹${emi.toFixed(2)} × ${months} months = ₹${total.toFixed(2)}`;
+        feeSummary.innerHTML = `
+          <p>Processing Fee (2%): ₹${fee.toFixed(2)}</p>
+          <p><strong>Disbursed Amount: ₹${disbursed.toFixed(2)}</strong></p>
+        `;
+      }
+    });
+
+    function getInterestByTenure(months) {
+      if (months <= 6) return 10;
+      else if (months <= 12) return 12;
+      else if (months <= 24) return 14;
+      else return 16;
+    }
+
+    function goNext(e) {
+      e.preventDefault();
+      const amt = parseInt(requestedAmount.value);
+      const mnt = parseInt(monthsSelect.value);
+      const rate = getInterestByTenure(mnt);
+      const fee = amt * 0.02;
+      const disbursed = amt - fee;
+
+      localStorage.setItem("loanAmount", amt);
+      localStorage.setItem("months", mnt);
+      localStorage.setItem("interest", rate);
+      localStorage.setItem("processingFee", fee.toFixed(2));
+      localStorage.setItem("disbursedAmount", disbursed.toFixed(2));
+
+      window.location.href = "bank.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loan Transfer - Digital Finance</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+    .section {
+      background: #fff;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .section h3 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      font-size: 18px;
+    }
+    .data-line {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+    .data-line strong {
+      display: inline-block;
+      width: 160px;
+      color: #333;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 20px auto 0;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">Digital Finance</div>
+
+  <div class="container">
+
+    <!-- PERSONAL -->
+    <div class="section">
+      <h3>Personal Information</h3>
+      <div class="data-line"><strong>Name:</strong> <span id="name"></span></div>
+      <div class="data-line"><strong>Mobile:</strong> <span id="mobile"></span></div>
+      <div class="data-line"><strong>Aadhaar:</strong> <span id="aadhaar"></span></div>
+      <div class="data-line"><strong>PAN:</strong> <span id="pan"></span></div>
+      <div class="data-line"><strong>DOB:</strong> <span id="dob"></span></div>
+      <div class="data-line"><strong>Gender:</strong> <span id="gender"></span></div>
+      <div class="data-line"><strong>Qualification:</strong> <span id="qualification"></span></div>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="section">
+      <h3>Address Details</h3>
+      <div class="data-line"><strong>House No:</strong> <span id="house"></span></div>
+      <div class="data-line"><strong>Street/Village:</strong> <span id="street"></span></div>
+      <div class="data-line"><strong>Landmark:</strong> <span id="landmark"></span></div>
+      <div class="data-line"><strong>District:</strong> <span id="district"></span></div>
+      <div class="data-line"><strong>State:</strong> <span id="state"></span></div>
+      <div class="data-line"><strong>Pincode:</strong> <span id="pincode"></span></div>
+    </div>
+
+    <!-- WORK -->
+    <div class="section">
+      <h3>Work Details</h3>
+      <div class="data-line"><strong>Profession:</strong> <span id="profession"></span></div>
+      <div class="data-line"><strong>Company Name:</strong> <span id="company"></span></div>
+      <div class="data-line"><strong>Salary:</strong> ₹<span id="salary"></span></div>
+      <div class="data-line"><strong>Experience:</strong> <span id="experience"></span> Years</div>
+      <div class="data-line"><strong>Company Address:</strong> <span id="companyAddress"></span></div>
+    </div>
+
+    <!-- LOAN -->
+    <div class="section">
+      <h3>Loan Details</h3>
+      <div class="data-line"><strong>Eligible Amount:</strong> ₹<span id="eligibleAmount"></span></div>
+      <div class="data-line"><strong>Approved Amount:</strong> ₹<span id="loanAmount"></span></div>
+      <div class="data-line"><strong>Tenure:</strong> <span id="months"></span> months</div>
+      <div class="data-line"><strong>Interest Rate:</strong> <span id="interest"></span>% per annum</div>
+      <div class="data-line"><strong>Monthly EMI:</strong> ₹<span id="emi"></span></div>
+      <div class="data-line"><strong>Total Payable:</strong> ₹<span id="totalRepayment"></span></div>
+      <div class="data-line"><strong>Processing Fee (2%):</strong> ₹<span id="processingFee"></span></div>
+      <div class="data-line"><strong>Disbursed Amount:</strong> ₹<span id="finalAmount"></span></div>
+    </div>
+
+    <!-- BANK -->
+    <div class="section">
+      <h3>Bank Details</h3>
+      <div class="data-line"><strong>Bank Name:</strong> <span id="bank"></span></div>
+      <div class="data-line"><strong>Account No:</strong> <span id="accountNumber"></span></div>
+      <div class="data-line"><strong>IFSC Code:</strong> <span id="ifsc"></span></div>
+      <div class="data-line"><strong>UPI (optional):</strong> <span id="upi"></span></div>
+    </div>
+
+    <button onclick="goNext()">Transfer Money to Bank</button>
+
+  </div>
+
+  <div class="footer">
+    <hr/>
+    <p style="font-size: 13px; color: gray; text-align: center;">
+      Registered under RBI Guidelines. Digital Finance © 2025
+    </p>
+  </div>
+
+  <script>
+    const get = key => localStorage.getItem(key) || '';
+
+    const fields = [
+      "name", "mobile", "aadhaar", "pan", "dob", "gender", "qualification",
+      "house", "street", "landmark", "district", "state", "pincode",
+      "profession", "company", "salary", "experience", "companyAddress",
+      "eligibleAmount", "loanAmount", "months", "interest", "emi",
+      "totalRepayment", "processingFee", "finalAmount",
+      "bank", "accountNumber", "ifsc", "upi"
+    ];
+
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = get(id);
+    });
+
+    function goNext() {
+      window.location.href = "success.html";
+    }
+  </script>
+</body>
+</html>

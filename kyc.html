@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KYC Details - Digital Finance</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="header">Digital Finance</div>
+
+  <div class="container">
+    <h2>KYC Details</h2>
+    <form onsubmit="return goNext(event)">
+      <label for="aadhaar">Aadhaar Number:</label>
+      <input type="text" id="aadhaar" maxlength="12" pattern="\d{12}" required placeholder="Enter 12-digit Aadhaar" />
+
+      <label for="pan">PAN Number:</label>
+      <input type="text" id="pan" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" required placeholder="e.g. FGXPS1234L" />
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" required />
+
+      <label for="gender">Gender:</label>
+      <select id="gender" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="qualification">Qualification:</label>
+      <select id="qualification" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+        <option value="">Select Qualification</option>
+        <option value="10th Pass">10th Pass</option>
+        <option value="12th Pass">12th Pass</option>
+        <option value="Graduate">Graduate</option>
+        <option value="Post Graduate">Post Graduate</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <h3 style="margin-top: 30px;">Full Address</h3>
+
+      <label for="house">House Number:</label>
+      <input type="text" id="house" required placeholder="e.g. 123/A" />
+
+      <label for="village">Village/Street:</label>
+      <input type="text" id="village" required placeholder="e.g. Main Road, Sector 5" />
+
+      <label for="landmark">Landmark:</label>
+      <input type="text" id="landmark" required placeholder="e.g. Near Bank/School" />
+
+      <label for="pincode">Pincode:</label>
+      <input type="text" id="pincode" maxlength="6" pattern="\d{6}" required placeholder="e.g. 110001" />
+
+      <label for="district">District:</label>
+      <input type="text" id="district" required placeholder="Enter District" />
+
+      <label for="state">State:</label>
+      <select id="state" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+        <option value="">Select State</option>
+        <option>Andhra Pradesh</option>
+        <option>Arunachal Pradesh</option>
+        <option>Assam</option>
+        <option>Bihar</option>
+        <option>Chhattisgarh</option>
+        <option>Goa</option>
+        <option>Gujarat</option>
+        <option>Haryana</option>
+        <option>Himachal Pradesh</option>
+        <option>Jharkhand</option>
+        <option>Karnataka</option>
+        <option>Kerala</option>
+        <option>Madhya Pradesh</option>
+        <option>Maharashtra</option>
+        <option>Manipur</option>
+        <option>Meghalaya</option>
+        <option>Mizoram</option>
+        <option>Nagaland</option>
+        <option>Odisha</option>
+        <option>Punjab</option>
+        <option>Rajasthan</option>
+        <option>Sikkim</option>
+        <option>Tamil Nadu</option>
+        <option>Telangana</option>
+        <option>Tripura</option>
+        <option>Uttar Pradesh</option>
+        <option>Uttarakhand</option>
+        <option>West Bengal</option>
+        <option>Delhi</option>
+      </select>
+
+      <button type="submit">Next</button>
+    </form>
+  </div>
+
+  <div class="footer">
+    <hr/>
+    <p style="font-size: 13px; color: gray; text-align: center;">Registered under RBI Guidelines. Digital Finance © 2025</p>
+  </div>
+
+  <script>
+    function goNext(e) {
+      e.preventDefault();
+
+      const dob = document.getElementById("dob").value;
+      const birthDate = new Date(dob);
+      const age = new Date().getFullYear() - birthDate.getFullYear();
+      if (age < 18) {
+        alert("You must be at least 18 years old.");
+        return false;
+      }
+
+      localStorage.setItem("aadhaar", document.getElementById("aadhaar").value);
+      localStorage.setItem("pan", document.getElementById("pan").value);
+      localStorage.setItem("dob", dob);
+      localStorage.setItem("gender", document.getElementById("gender").value);
+      localStorage.setItem("qualification", document.getElementById("qualification").value);
+      localStorage.setItem("house", document.getElementById("house").value);
+      localStorage.setItem("village", document.getElementById("village").value);
+      localStorage.setItem("landmark", document.getElementById("landmark").value);
+      localStorage.setItem("pincode", document.getElementById("pincode").value);
+      localStorage.setItem("district", document.getElementById("district").value);
+      localStorage.setItem("state", document.getElementById("state").value);
+
+      window.location.href = "work.html";
+    }
+  </script>
+</body>
+</html>

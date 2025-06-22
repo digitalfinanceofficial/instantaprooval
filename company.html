@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Company Address - Digital Finance</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Digital Finance</div>
+
+  <div class="container">
+    <h2>Company / Business Address</h2>
+
+    <form onsubmit="return goNext(event)">
+      <label for="house">House No. / Building:</label>
+      <input type="text" id="house" required placeholder="House No. or Building Name" />
+
+      <label for="street">Street / Area:</label>
+      <input type="text" id="street" required placeholder="Street or Locality" />
+
+      <label for="landmark">Landmark (Optional):</label>
+      <input type="text" id="landmark" placeholder="Nearby place or landmark" />
+
+      <label for="city">City / Town:</label>
+      <input type="text" id="city" required placeholder="Enter City" />
+
+      <label for="pincode">Pin Code:</label>
+      <input type="number" id="pincode" required placeholder="Enter 6-digit Pin Code" />
+
+      <label for="state">State:</label>
+      <select id="state" required>
+        <option value="">Select State</option>
+        <option>Andhra Pradesh</option>
+        <option>Arunachal Pradesh</option>
+        <option>Assam</option>
+        <option>Bihar</option>
+        <option>Chhattisgarh</option>
+        <option>Goa</option>
+        <option>Gujarat</option>
+        <option>Haryana</option>
+        <option>Himachal Pradesh</option>
+        <option>Jharkhand</option>
+        <option>Karnataka</option>
+        <option>Kerala</option>
+        <option>Madhya Pradesh</option>
+        <option>Maharashtra</option>
+        <option>Manipur</option>
+        <option>Meghalaya</option>
+        <option>Mizoram</option>
+        <option>Nagaland</option>
+        <option>Odisha</option>
+        <option>Punjab</option>
+        <option>Rajasthan</option>
+        <option>Sikkim</option>
+        <option>Tamil Nadu</option>
+        <option>Telangana</option>
+        <option>Tripura</option>
+        <option>Uttar Pradesh</option>
+        <option>Uttarakhand</option>
+        <option>West Bengal</option>
+      </select>
+
+      <button type="submit">Next</button>
+    </form>
+  </div>
+
+  <div class="footer">
+    <hr/>
+    <p style="font-size: 13px; color: gray; text-align: center;">Registered under RBI Guidelines. Digital Finance © 2025</p>
+  </div>
+
+  <script>
+    function goNext(e) {
+      e.preventDefault();
+      localStorage.setItem("house", document.getElementById("house").value);
+      localStorage.setItem("street", document.getElementById("street").value);
+      localStorage.setItem("landmark", document.getElementById("landmark").value);
+      localStorage.setItem("city", document.getElementById("city").value);
+      localStorage.setItem("pincode", document.getElementById("pincode").value);
+      localStorage.setItem("state", document.getElementById("state").value);
+      window.location.href = "approval.html";
+    }
+  </script>
+</body>
+</html>

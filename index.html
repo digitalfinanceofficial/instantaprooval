@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Finance - Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="header">Digital Finance</div>
+
+  <div class="container">
+    <h2>Welcome to Digital Loan</h2>
+    <form onsubmit="return goNext(event)">
+      <label for="name">Name</label>
+      <input type="text" id="name" required placeholder="Enter your name" />
+      
+      <label for="mobile">Mobile Number</label>
+      <input type="tel" id="mobile" pattern="[0-9]{10}" maxlength="10" required placeholder="Enter 10-digit mobile number" />
+
+      <button type="submit">Next</button>
+    </form>
+  </div>
+
+  <div class="footer">
+    <hr/>
+    <p>Registered under RBI Guidelines. Digital Finance © 2025</p>
+  </div>
+
+  <script>
+    function goNext(e) {
+      e.preventDefault();
+      localStorage.setItem("name", document.getElementById("name").value);
+      localStorage.setItem("mobile", document.getElementById("mobile").value);
+      window.location.href = "kyc.html";
+    }
+  </script>
+</body>
+</html>

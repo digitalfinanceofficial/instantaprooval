@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loan Success - Digital Finance</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .summary-box {
+      background: #f4f4f4;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #ccc;
+      margin-top: 20px;
+    }
+    .summary-box p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    .highlight {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Digital Finance</div>
+
+  <div class="container" style="text-align:center;">
+    <h2>✅ Hi, <span id="userName"></span></h2>
+    <h3 class="highlight">Congratulations! Your loan has been successfully processed.</h3>
+
+    <div class="summary-box">
+      <p><strong>Loan ID:</strong> <span id="loanID"></span></p>
+      <p><strong>Transaction ID:</strong> <span id="txnID"></span></p>
+      <p><strong>Approved Loan Amount:</strong> ₹<span id="loanAmount"></span></p>
+      <p><strong>Processing Fee (2%):</strong> ₹<span id="processingFee"></span></p>
+      <p><strong>Disbursed Amount:</strong> ₹<span id="disbursedAmount"></span></p>
+      <p><strong>Credited to Bank:</strong> <span id="bank"></span> (A/C: <span id="account"></span>)</p>
+      <p><strong>IFSC Code:</strong> <span id="ifsc"></span></p>
+    </div>
+
+    <p style="margin-top: 20px;">💸 Your amount will be credited in <strong>1 to 3 hours</strong>.</p>
+
+    <button onclick="downloadPDF()">📄 Download PDF</button>
+  </div>
+
+  <div class="footer">
+    <hr/>
+    <p style="font-size: 13px; color: gray; text-align: center;">Registered under RBI Guidelines. Digital Finance © 2025</p>
+  </div>
+
+  <script src="generate-pdf.js"></script>
+  <script>
+    // Get data
+    let name = localStorage.getItem("name");
+    let loanAmount = parseFloat(localStorage.getItem("loanAmount"));
+    let bank = localStorage.getItem("bank");
+    let account = localStorage.getItem("accountNumber");
+    let ifsc = localStorage.getItem("ifsc");
+
+    // Generate IDs
+    let loanID = "DIFIN" + Math.floor(10000 + Math.random() * 90000);
+    let txnID = "DFTXN" + Math.floor(10000 + Math.random() * 90000);
+    localStorage.setItem("loanID", loanID);
+    localStorage.setItem("txnID", txnID);
+
+    // Processing
+    let processingFee = loanAmount * 0.02;
+    let disbursedAmount = loanAmount - processingFee;
+
+    // Set HTML
+    document.getElementById("userName").innerText = name;
+    document.getElementById("loanAmount").innerText = loanAmount.toFixed(2);
+    document.getElementById("processingFee").innerText = processingFee.toFixed(2);
+    document.getElementById("disbursedAmount").innerText = disbursedAmount.toFixed(2);
+    document.getElementById("bank").innerText = bank;
+    document.getElementById("account").innerText = account;
+    document.getElementById("ifsc").innerText = ifsc;
+    document.getElementById("loanID").innerText = loanID;
+    document.getElementById("txnID").innerText = txnID;
+  </script>
+</body>
+</html>
